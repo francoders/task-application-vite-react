@@ -1,12 +1,11 @@
 import React from "react";
-import "./style.scss";
-import { Button } from "react-bootstrap";
+import { Navbar } from "./components/Navbar";
 
 export default function App() {
 	return (
 		<>
+			<Navbar />
 			<h1>App</h1>
-			<Button className="btn">Bootstrap</Button>
 		</>
 	);
 }
