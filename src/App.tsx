@@ -1,11 +1,22 @@
-import React from "react";
-import { Navbar } from "./components/Navbar";
+import { useState } from "react";
+import { NavBar, TaskForm, ElModal } from "./components";
 
 export default function App() {
+	const [showModal, setShowModal] = useState(false);
+
+	const openCloseModal = () => {
+		setShowModal(!showModal);
+	};
+
 	return (
 		<>
-			<Navbar />
-			<h1>App</h1>
+			<NavBar openCloseModal={openCloseModal} />
+			<ElModal
+				show={showModal}
+				close={openCloseModal}
+				title="Nueva Tarea"
+				children={<TaskForm />}
+			/>
 		</>
 	);
 }
