@@ -1,12 +1,28 @@
 import { FormEvent, useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import classNames from "classnames";
+import { Task } from "../../api";
+import "./TaskForm.style.scss";
+import { PropsTypes } from "./TaskForm.types";
 
-export function TaskForm() {
+const taskActions = new Task();
+
+export function TaskForm(props: PropsTypes) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const [error, setError] = useState(false);
+
+	const { close } = props;
 
 	const onSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setError(false);
+		if (title) {
+			taskActions.create({ title, description });
+			close();
+		} else {
+			setError(true);
+		}
 	};
 
 	return (
@@ -14,7 +30,9 @@ export function TaskForm() {
 			<Form.Control
 				type="text"
 				placeholder="Titulo de la tarea"
-				className="mb-3"
+				className={classNames("mb-3", {
+					error: error,
+				})}
 				value={title}
 				onChange={(event) => setTitle(event.target.value)}
 			/>
